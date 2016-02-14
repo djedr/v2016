@@ -1,0 +1,89 @@
+<script>
+  var monster = { left: -32 }, cookie = { right: -32 }, heart = {}, text = { scale: 1 }, halfWidth,
+      lines = ['WESOŁYCH WALENTYNEK!', 'KOCHAM CIĘ JUSTYNKO!', ':3 :* <3'], lineId = 0, isTimeoutSet = false;
+  
+  function animate() {    
+    if (monster.left < halfWidth - 32) {
+      monster.left += 3;
+      cookie.right += 3;
+      monster.img.style.left = monster.left + 'px';
+      cookie.img.style.right = cookie.right + 'px';
+    } else if (heart.scale < 100) {
+      heart.img.style.display = 'block';
+      heart.scale *= 1.1;
+      heart.img.style.transform = 'scale(' + heart.scale + ')';
+    } else if (text.scale < 3) {
+      text.div.style.zIndex = 1000;
+      text.div.textContent = lines[lineId];
+      text.scale *= 1.01;
+      text.div.style.transform = 'scale(' + text.scale + ')';
+    } else if (lineId < lines.length) {
+      if (!isTimeoutSet) {
+        isTimeoutSet = true;
+        setTimeout(function () {
+          text.scale = 1;
+          text.div.style.transform = 'scale(' + text.scale + ')';
+          ++lineId;
+          isTimeoutSet = false;
+        }, 2000);
+      }
+    }
+    
+    requestAnimationFrame(animate);
+  }
+  
+  function start() {
+    monster.img = document.getElementById("monster");
+    cookie.img = document.getElementById("cookie");
+    heart.img = document.getElementById("heart");
+    text.div = document.getElementById("text");
+    document.getElementById("start-button").style.display = 'none';
+    monster.img.style.display = 'block';
+    cookie.img.style.display = 'block';
+    heart.img.style.display = 'block';
+    heart.img.style.left = heart.img.getBoundingClientRect().left - 16 + 'px';
+    heart.img.style.display = 'none';
+    heart.scale = 1;
+    
+    halfWidth = document.body.clientWidth / 2;
+    
+    requestAnimationFrame(animate);
+  }
+</script>
+
+<meta charset="utf-8">
+
+<style>
+  #start-button {
+    margin: auto;
+    display: block;
+    width: 25%;
+    height: 10%;
+    transform: translateY(50vh) scale(3, 3);
+    background-color: #faa;
+    border: 1px solid #f77;
+    color: #f22;
+    font-weight: bold;
+    font-family: Helvetica;
+    border-radius: 30px;
+    font-size: 2.5vw;
+    text-shadow: 1px 1px 0 #800;
+    box-shadow: 1px 1px 0 #500;
+  }
+  #start-button:hover {
+    background-color: #f99;
+    border: 1px solid #f66;
+    text-shadow: 1px 1px 0 #700;
+    box-shadow: 1px 1px 0 #400;
+    color: #f00;
+  }
+</style>
+
+<body style="background-color: black; overflow: hidden;">
+  <input id="start-button" type="button" value="Be mine Valentine!" style="" onclick="start()" />
+  <img id="monster" src="img/cookie_monster.png" style="position: absolute; top: 50%; left: -32px; display: none" />
+  <img id="cookie" src="img/cookie.png" style="position: absolute; top: 50%; right: -32px; display: none" />
+  <img id="heart" src="img/heart.png" style="position: absolute; top: 50%; left: 50%; display: none" />
+  <div id="text" style="position: relative; font-size: 2vw; z-index: 10; color: #fff; text-align: center; vertical-align: middle; line-height: 100vh; font-weight: bold; font-family: Helvetica">
+  </div>
+</body>
