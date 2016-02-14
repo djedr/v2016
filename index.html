@@ -8,11 +8,15 @@
       cookie.right += 3;
       monster.img.style.left = monster.left + 'px';
       cookie.img.style.right = cookie.right + 'px';
-    } else if (heart.scale < 100) {
+    } else if (heart.scale < 30) {
       heart.img.style.display = 'block';
       heart.scale *= 1.1;
       heart.img.style.transform = 'scale(' + heart.scale + ')';
     } else if (text.scale < 3) {
+      document.body.style.backgroundColor = "#f1657d";
+      heart.img.style.display = 'none';
+      monster.img.style.display = 'none';
+      cookie.img.style.display = 'none';
       text.div.style.zIndex = 1000;
       text.div.textContent = lines[lineId];
       text.scale *= 1.01;
